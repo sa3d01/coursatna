@@ -14,10 +14,10 @@ class StudentUserDTO extends JsonResource
                 $level=[
                     'id' => $this->level ? (int)$this->level->id : 0,
                     'class_stage' => [
-                        'id'=>$this->level ? (int)$this->level->class_stage_id : 0,
+                        'id'=>$this->level ? (int)$this->level->college_id : 0,
                         'name'=>[
-                            'en' => $this->level ? $this->level->class_stage->name_en : "",
-                            'ar' => $this->level ? $this->level->class_stage->name_ar : "",
+                            'en' => $this->level ? $this->level->college->name_en : "",
+                            'ar' => $this->level ? $this->level->college->name_ar : "",
                         ]
                     ],
                     'stage' => [
@@ -25,20 +25,6 @@ class StudentUserDTO extends JsonResource
                         'name'=>[
                             'en' => $this->level ? $this->level->stage->name_en : "",
                             'ar' => $this->level ? $this->level->stage->name_ar : "",
-                        ]
-                    ],
-                    'university' => [
-                        'id'=>$this->level ? (int)$this->level->university_id : 0,
-                        'name'=>[
-                            'en' => $this->level ? $this->level->university->name_en : "",
-                            'ar' => $this->level ? $this->level->university->name_ar : "",
-                        ]
-                    ],
-                    'college' => [
-                        'id'=>$this->level ? (int)$this->level->college_id : 0,
-                        'name'=>[
-                            'en' => $this->level ? $this->level->college->name_en : "",
-                            'ar' => $this->level ? $this->level->college->name_ar : "",
                         ]
                     ],
                 ];

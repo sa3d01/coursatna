@@ -42,7 +42,7 @@ class LevelController extends Controller
         if (request()->learn_type=='College'){
 //            $classes=ClassStage::all();
             return response()->json(
-                StageDTO::collection(College::all()),
+                ClassStageDTO::collection(College::all()),
                 200
             );
         }

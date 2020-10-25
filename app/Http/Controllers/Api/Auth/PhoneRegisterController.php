@@ -26,7 +26,11 @@ class PhoneRegisterController extends Controller
         $data['notification_toggle'] = true;
         $data['last_ip'] = $request->ip();
         if ($request['stage_id'] && $request['class_stage_id']){
-            $level_id=Level::where(['class_stage_id'=>$request['class_stage_id'],'stage_id'=>$request['stage_id']])->value('id');
+            if ($request['stage_id']==3){
+                $level_id=Level::where(['college_id'=>$request['class_stage_id'],'stage_id'=>$request['stage_id']])->value('id');
+            }else{
+                $level_id=Level::where(['class_stage_id'=>$request['class_stage_id'],'stage_id'=>$request['stage_id']])->value('id');
+            }
             $data['level_id'] = $level_id;
         }
         $user = User::create($data);

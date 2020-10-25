@@ -21,6 +21,7 @@ class StageDTO extends JsonResource
                 'en' => $this->name_en,
                 'ar' => $this->name_ar,
             ],
+            'learn_type'=>$this->id==3?'College':'School'
         ];
     }
 }

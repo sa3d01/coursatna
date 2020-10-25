@@ -29,8 +29,9 @@ class User extends Authenticatable
         'cover_photo',
         'gender',
         'bio',
+        'learn_type',//جامعى وﻻ قبل جامعى
         'level_id',
-        'school_name',
+//        'school_name',
         'governorate_id',
         'city_id',
         // By Admin

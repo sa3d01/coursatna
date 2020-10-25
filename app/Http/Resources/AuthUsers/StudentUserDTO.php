@@ -9,6 +9,61 @@ class StudentUserDTO extends JsonResource
 
     public function toArray($request)
     {
+        if ($this->level_id!=null){
+            if($this->level->university_id!=null){
+                $level=[
+                    'id' => $this->level ? (int)$this->level->id : 0,
+                    'class_stage' => [
+                        'id'=>$this->level ? (int)$this->level->class_stage_id : 0,
+                        'name'=>[
+                            'en' => $this->level ? $this->level->class_stage->name_en : "",
+                            'ar' => $this->level ? $this->level->class_stage->name_ar : "",
+                        ]
+                    ],
+                    'stage' => [
+                        'id'=>$this->level ? (int)$this->level->stage_id : 0,
+                        'name'=>[
+                            'en' => $this->level ? $this->level->stage->name_en : "",
+                            'ar' => $this->level ? $this->level->stage->name_ar : "",
+                        ]
+                    ],
+                    'university' => [
+                        'id'=>$this->level ? (int)$this->level->university_id : 0,
+                        'name'=>[
+                            'en' => $this->level ? $this->level->university->name_en : "",
+                            'ar' => $this->level ? $this->level->university->name_ar : "",
+                        ]
+                    ],
+                    'college' => [
+                        'id'=>$this->level ? (int)$this->level->college_id : 0,
+                        'name'=>[
+                            'en' => $this->level ? $this->level->college->name_en : "",
+                            'ar' => $this->level ? $this->level->college->name_ar : "",
+                        ]
+                    ],
+                ];
+            }else{
+                $level=[
+                    'id' => $this->level ? (int)$this->level->id : 0,
+                    'class_stage' => [
+                        'id'=>$this->level ? (int)$this->level->class_stage_id : 0,
+                        'name'=>[
+                            'en' => $this->level ? $this->level->class_stage->name_en : "",
+                            'ar' => $this->level ? $this->level->class_stage->name_ar : "",
+                        ]
+                    ],
+                    'stage' => [
+                        'id'=>$this->level ? (int)$this->level->stage_id : 0,
+                        'name'=>[
+                            'en' => $this->level ? $this->level->stage->name_en : "",
+                            'ar' => $this->level ? $this->level->stage->name_ar : "",
+                        ]
+                    ],
+                ];
+            }
+        }else{
+            $level="";
+        }
         return [
             'id' => (int)$this->id,
             'name' => $this->name,
@@ -19,23 +74,8 @@ class StudentUserDTO extends JsonResource
             'cover_photo_link' => $this->cover_photo_link,
             'gender' => $this->gender ?? "",
             'bio' => $this->bio ?? "",
-            'subject' => [
-                'id' => $this->level ? (int)$this->level->id : 0,
-                'class_stage' => [
-                    'id'=>$this->level ? (int)$this->level->class_stage_id : 0,
-                    'name'=>[
-                        'en' => $this->level ? $this->level->class_stage->name_en : "",
-                        'ar' => $this->level ? $this->level->class_stage->name_ar : "",
-                    ]
-                ],
-                'stage' => [
-                    'id'=>$this->level ? (int)$this->level->stage_id : 0,
-                    'name'=>[
-                        'en' => $this->level ? $this->level->stage->name_en : "",
-                        'ar' => $this->level ? $this->level->stage->name_ar : "",
-                    ]
-                ],
-            ],
+            'learn_type'=>$this->learn_type,
+            'level' => $level,
             'governorate' => [
                 'id' => $this->governorate ? (int)$this->governorate->id : 0,
                 'name' => [

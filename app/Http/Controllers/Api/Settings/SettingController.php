@@ -31,8 +31,22 @@ class SettingController extends Controller
     {
         $user = $request->user();
         $request->validated();
-        $level_id=Level::where(['class_stage_id'=>$request['class_stage_id'],'stage_id'=>$request['stage_id']])->value('id');
-        $data['level_id'] = $level_id;
+        $level_data=[
+            'class_stage_id'=>$request['class_stage_id'],
+            'stage_id'=>$request['stage_id'],
+        ];
+        //التصنيف هيكون الكلية فى A-Z والخره ده مش انا وربنا السبب فيه :\
+        if ($request['learn_type']=='College'){
+            $level_data=[
+                'college_id'=>$request['class_stage_id'],
+                'stage_id'=>$request['stage_id'],
+            ];
+        }
+        $level=Level::where($level_data)->first();
+        if (!$level){
+            $level=Level::create($level_data);
+        }
+        $data['level_id'] = $level->id;
         $user->update($data);
 
         return response()->json(new StudentUserDTO($user), 200);

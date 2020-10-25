@@ -36,15 +36,18 @@ class RoleController extends MasterController
     }
     public function index()
     {
-        foreach (Level::all() as $level){
-            foreach ($level->subjects as $subject) {
-                Permission::firstOrNew([
-                    'name' =>'asks-bank-'.$level->nameForSelect().'-'.Subject::whereId($subject)->first()->nameForSelect(),
-                    'guard_name' => 'web'
-                ]);
+        try {
+            foreach (Level::all() as $level){
+                foreach ($level->subjects as $subject) {
+                    Permission::firstOrNew([
+                        'name' =>'asks-bank-'.$level->nameForSelect().'-'.Subject::whereId($subject)->first()->nameForSelect(),
+                        'guard_name' => 'web'
+                    ]);
+                }
             }
-        }
+        }catch (\Exception $e){
 
+        }
         $rows=Role::all();
         return View('dashboard.index.index', [
             'rows' => $rows,

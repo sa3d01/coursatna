@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('cover_photo')->nullable();
             $table->text('bio')->nullable();
-            $table->string('school_name')->nullable();
+            $table->string('learn_type')->nullable();
             $table->unsignedBigInteger('governorate_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->boolean('banned')->nullable()->default(false);

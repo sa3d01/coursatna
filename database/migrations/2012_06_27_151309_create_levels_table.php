@@ -15,10 +15,13 @@ class CreateLevelsTable extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            //اعدادى
+            //اعدادى ثانوى جامعة
             $table->unsignedBigInteger('stage_id')->nullable();
             //اولى
             $table->unsignedBigInteger('class_stage_id')->nullable();
+            //college stage
+            $table->unsignedBigInteger('university_id')->nullable();
+            $table->unsignedBigInteger('college_id')->nullable();
             //[1,2,3]
             $table->json('subjects')->nullable();
             $table->boolean('status')->default(1);

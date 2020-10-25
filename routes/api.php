@@ -18,6 +18,8 @@ Route::group([
         Route::get('stages', 'LevelController@stages');
         Route::get('levels', 'LevelController@index');
         Route::get('subjects', 'SubjectController@index');
+        Route::get('universities', 'LevelController@universities');
+        Route::get('colleges', 'LevelController@colleges');
     });
     // Locations
     Route::group(['namespace' => 'Locations', 'prefix' => 'locations'], function () {

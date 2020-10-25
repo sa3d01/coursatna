@@ -24,7 +24,6 @@ class PhoneRegisterRequest extends ApiMasterRequest
                     'message' => $phone->errorMsg()
                 ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)); // 422
             }
-
             $this->merge(['phone' => $phone->getNormalized()]);
         }
     }
@@ -37,6 +36,7 @@ class PhoneRegisterRequest extends ApiMasterRequest
             'password' => 'required|string|min:6|max:30',
             'birthday' => 'required|date|before:today',
             'gender' => 'nullable|string|in:MALE,FEMALE',
+            'learn_type' => 'required|string|in:College,School',
             'governorate_id' => 'required|numeric|exists:governorates,id',
             'city_id' => 'required|numeric|exists:cities,id',
             'locale' => 'required|string|max:3|in:en,ar',

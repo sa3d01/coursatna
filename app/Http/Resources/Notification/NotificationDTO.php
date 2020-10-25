@@ -19,8 +19,9 @@ class NotificationDTO extends JsonResource
         return [
             'id' => (int)$this->id,
             'type' => $this->type,
-            'notifiable_type' => $this->notifiable_type,
+//            'notifiable_type' => $this->notifiable_type,
             'data' => $this->data,
+            'read_at'=>$this->read_at
         ];
     }
 }

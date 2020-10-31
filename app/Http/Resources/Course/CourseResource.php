@@ -6,6 +6,7 @@ use App\Http\Resources\AuthUsers\StudentUserDTO;
 use App\Http\Resources\General\LevelDTO;
 use App\Http\Resources\General\SubjectDTO;
 use App\Models\Favourite;
+use App\Models\Subscribe;
 use Illuminate\Http\Resources\Json\JsonResource;
 use phpDocumentor\Reflection\Types\Object_;
 use tests\Mockery\Adapter\Phpunit\EmptyTestCase;
@@ -26,6 +27,12 @@ class CourseResource extends JsonResource
         }else{
             $is_favourite=false;
         }
+        $subscribed=Subscribe::where(['user_id'=>$request->user()->id, 'course_id'=> $this->id])->first();
+        if ($subscribed){
+            $is_subscribed=true;
+        }else{
+            $is_subscribed=false;
+        }
         return [
             'id' => (int)$this->id,
             'name' => $this->name,
@@ -38,7 +45,8 @@ class CourseResource extends JsonResource
             'attachments'=>AttachmentDTO::collection($this->attachments),
             'sessions_count'=>count($this->sessions),
             'sessions'=>SessionDTO::collection($this->sessions),
-            'is_favourite'=>$is_favourite
+            'is_favourite'=>$is_favourite,
+            'subscribed'=>$is_subscribed
         ];
     }
 }

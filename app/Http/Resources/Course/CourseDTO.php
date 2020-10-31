@@ -6,6 +6,7 @@ use App\Http\Resources\AuthUsers\StudentUserDTO;
 use App\Http\Resources\General\LevelDTO;
 use App\Http\Resources\General\SubjectDTO;
 use App\Models\Favourite;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,6 +26,12 @@ class CourseDTO extends JsonResource
         }else{
             $is_favourite=false;
         }
+        $subscribed=Subscribe::where(['user_id'=>$request->user()->id, 'course_id'=> $this->id])->first();
+        if ($subscribed){
+            $is_subscribed=true;
+        }else{
+            $is_subscribed=false;
+        }
         return [
             'id' => (int)$this->id,
             'name' => $this->name,
@@ -34,7 +41,8 @@ class CourseDTO extends JsonResource
             'image' =>$this->image,
             'price' => (int)$this->price,
             'rate'=>(double)$this->ratings->avg('rate'),
-            'is_favourite'=>$is_favourite
+            'is_favourite'=>$is_favourite,
+            'subscribed'=>$is_subscribed
         ];
     }
 }

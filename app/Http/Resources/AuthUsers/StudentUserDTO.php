@@ -10,7 +10,7 @@ class StudentUserDTO extends JsonResource
     public function toArray($request)
     {
         if ($this->level_id!=null){
-            if($this->level->university_id!=null){
+            if($this->level->college_id!=null){
                 $level=[
                     'id' => $this->level ? (int)$this->level->id : 0,
                     'class_stage' => [

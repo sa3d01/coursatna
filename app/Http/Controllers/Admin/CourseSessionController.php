@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Course;
 use App\Models\CourseSession;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +22,7 @@ class CourseSessionController extends MasterController
         return [
             'topic' => 'required',
             'file'=>'required',
-            
+
         ];
     }
      public function validation_msg()
@@ -31,7 +33,13 @@ class CourseSessionController extends MasterController
     }
     public function index()
     {
-        $rows = $this->model->latest()->get();
+        if(\Auth::user()->getRoleArabicName()=='TEACHER'){
+            $teacher=User::find(\Auth::user()->id);
+            $course_ids=Course::where('teacher_id',$teacher->id)->pluck('id');
+            $rows=$this->model->whereIn('course_id',$course_ids)->latest()->get();
+        }else{
+            $rows = $this->model->latest()->get();
+        }
         return View('dashboard.index.index', [
             'rows' => $rows,
             'type'=>'course_session',
@@ -47,22 +55,41 @@ class CourseSessionController extends MasterController
     }
     public function create()
     {
-        return View('dashboard.create.create', [
-            'type'=>'course',
-            'action'=>'admin.course_session.store',
-            'title'=>'أضافة حصة',
-            'create_fields'=>['عنوان الحصة' => 'topic','تاريخ البدأ' => 'start_date','تاريخ التوقف' => 'end_date'],
-            'selects'=>[
-                [
-                    'input_name'=>'course_id',
-                    'rows'=>\App\Models\Course::all(),
-                    'title'=>'الكورس',
+        if(\Auth::user()->getRoleArabicName()=='TEACHER'){
+            $teacher=User::find(\Auth::user()->id);
+            $courses=Course::where('teacher_id',$teacher->id)->get();
+            return View('dashboard.create.create', [
+                'type'=>'course',
+                'action'=>'admin.course_session.store',
+                'title'=>'أضافة حصة',
+                'create_fields'=>['عنوان الحصة' => 'topic','تاريخ البدأ' => 'start_date','تاريخ التوقف' => 'end_date'],
+                'selects'=>[
+                    [
+                        'input_name'=>'course_id',
+                        'rows'=>$courses,
+                        'title'=>'الكورس',
+                    ],
                 ],
-            ],
-            'video'=>true
-        ]);
+                'video'=>true
+            ]);
+        }else{
+            return View('dashboard.create.create', [
+                'type'=>'course',
+                'action'=>'admin.course_session.store',
+                'title'=>'أضافة حصة',
+                'create_fields'=>['عنوان الحصة' => 'topic','تاريخ البدأ' => 'start_date','تاريخ التوقف' => 'end_date'],
+                'selects'=>[
+                    [
+                        'input_name'=>'course_id',
+                        'rows'=>\App\Models\Course::all(),
+                        'title'=>'الكورس',
+                    ],
+                ],
+                'video'=>true
+            ]);
+        }
     }
-   
+
     public function store(Request $request)
     {
         $this->validate($request, $this->validation_func(1),$this->validation_msg());
@@ -71,6 +98,6 @@ class CourseSessionController extends MasterController
         $this->model->create($data);
         return redirect()->route('admin.course_session.index')->with('created');
     }
-   
+
 
 }

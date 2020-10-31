@@ -18,9 +18,9 @@ class SliderController extends Controller
     public function index()
     {
         $sliders=Slider::whereJsonContains('levels', request()->user()->level_id)->get();
-        
+
         return response()->json(
-            SliderDTO::collection(Slider::all()),
+            SliderDTO::collection($sliders),
             200
         );
     }

@@ -36,7 +36,7 @@ class SettingController extends Controller
             'stage_id'=>$request['stage_id'],
         ];
         //التصنيف هيكون الكلية فى A-Z والخره ده مش انا وربنا السبب فيه :\
-        if ($request['learn_type']=='College'){
+        if ($user->learn_type=='College'){
             $level_data=[
                 'college_id'=>$request['class_stage_id'],
                 'stage_id'=>$request['stage_id'],
@@ -47,8 +47,12 @@ class SettingController extends Controller
             $level=Level::create($level_data);
         }
         $data['level_id'] = $level->id;
+        if ($request['stage_id']==3){
+            $data['learn_type']='College';
+        }else{
+            $data['learn_type']='School';
+        }
         $user->update($data);
-
         return response()->json(new StudentUserDTO($user), 200);
     }
 

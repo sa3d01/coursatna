@@ -34,8 +34,8 @@ class Level extends Model
         'subjects' => 'array',
     ];
     public function nameForSelect(){
-        if ($this->university_id!=null){
-            return $this->university->name_ar.'-'.$this->college->name_ar.'-'.$this->class_stage->name_ar;
+        if ($this->college_id!=null){
+            return $this->college->name_ar;
         }
         return $this->class_stage->name_ar.'-'.$this->stage->name_ar;
     }

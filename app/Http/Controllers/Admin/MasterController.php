@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Center;
 use App\Models\Course;
+use App\Models\Level;
 use App\Models\User;
 use BaconQrCode\Encoder\QrCode;
 use Carbon\Carbon;
@@ -26,9 +27,18 @@ abstract class MasterController extends Controller
 
     public function __construct()
     {
-        $users_count=User::whereType('USER')->count();
-        $courses_count=Course::count();
-        $debits=Center::sum('debit');
+//        if(\Auth::user()->getRoleArabicName()=='TEACHER'){
+//            $teacher=User::find(\Auth::user()->id);
+//            $courses_count=Course::where('teacher_id',\Auth::user()->id)->count();
+//            $level_ids=Level::whereJsonContains('subjects', $teacher->subject_id)->pluck('id');
+//            $users_count=User::whereType('USER')->whereIn('level_id',$level_ids)->count();
+//            $debits=Center::where('id',$teacher->center_id)->value('debit');
+//        }else{
+//            $users_count=User::whereType('USER')->count();
+//            $courses_count=Course::count();
+//            $debits=Center::sum('debit');
+//        }
+
         $this->middleware(['auth', 'permission:access-dashboard']);
         view()->share(array(
             'module_name' => $this->module_name,
@@ -39,9 +49,9 @@ abstract class MasterController extends Controller
             'create_fields' => $this->create_fields,
             'update_fields' => $this->update_fields,
             'json_fields' => $this->json_fields,
-            'users_count'=>$users_count,
-            'courses_count'=>$courses_count,
-            'debits'=>$debits
+//            'users_count'=>$users_count,
+//            'courses_count'=>$courses_count,
+//            'debits'=>$debits
         ));
     }
     public function destroy($id)

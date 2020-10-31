@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class TeacherController extends MasterController
 {
@@ -95,7 +96,9 @@ class TeacherController extends MasterController
         $data['type']='TEACHER';
         $data['email_verified_at']=now();
         $data['phone_verified_at']=now();
-        $this->model->create($data);
+        $teacher=$this->model->create($data);
+        $role=Role::findById(12);
+        $teacher->assignRole($role->name);
         return redirect()->route('admin.teacher.index')->with('created');
     }
 }

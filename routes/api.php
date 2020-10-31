@@ -17,7 +17,7 @@ Route::group([
         Route::get('class_stages', 'LevelController@class_stages');
         Route::get('stages', 'LevelController@stages');
         Route::get('levels', 'LevelController@index');
-        Route::get('subjects', 'SubjectController@index');
+        Route::get('subjects', 'SubjectController@index')->middleware('auth:api');
         Route::get('universities', 'LevelController@universities');
         Route::get('colleges', 'LevelController@colleges');
     });

@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Course;
+use App\Models\College;
 use App\Models\Level;
-use App\Models\Subject;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class SubjectController extends MasterController
+class CollegeController extends MasterController
 {
-    public function __construct(Subject $model)
+    public function __construct(College $model)
     {
         $this->model = $model;
-        $this->route = 'subject';
+        $this->route = 'college';
         parent::__construct();
     }
 
@@ -26,25 +24,23 @@ class SubjectController extends MasterController
     }
     public function create()
     {
-        return View('dashboard.subject.create', [
-            'type'=>'subject',
-            'action'=>'admin.subject.store',
-            'title'=>'أضافة مادة دراسية',
+        return View('dashboard.create.create', [
+            'type'=>'college',
+            'action'=>'admin.college.store',
+            'title'=>'أضافة كلية',
             'create_fields'=>['الاسم باللغة العربية' => 'name_ar','الاسم باللغة الانجليزية' => 'name_en'],
-            'image'=>true,
         ]);
     }
     public function show($id)
     {
-        return View('dashboard.subject.show', [
+        return View('dashboard.show.show', [
             'row' => $this->model->findOrFail($id),
-            'type'=>'subject',
-            'action'=>'admin.subject.update',
-            'title'=>'بيانات المادة الدراسية',
+            'type'=>'college',
+            'action'=>'admin.college.update',
+            'title'=>'بيانات الالكلية',
             'edit_fields'=>
                 ['الاسم باللغة العربية' => 'name_ar','الاسم باللغة الانجليزية' => 'name_en']
             ,
-            'image'=>true,
         ]);
     }
     public function validation_msg()
@@ -57,29 +53,31 @@ class SubjectController extends MasterController
     public function index()
     {
         $rows = $this->model->latest()->get();
-        return View('dashboard.subject.index', [
+        return View('dashboard.index.index', [
             'rows' => $rows,
-            'type'=>'subject',
-            'title'=>'قائمة المواد الدراسية',
+            'type'=>'college',
+            'title'=>'قائمة الكليات',
             'index_fields'=>['الاسم' => 'name_ar'],
-            'image'=>true,
         ]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, $this->validation_func(1),$this->validation_msg());
-        $new_subject=$this->model->create($request->all());
-        foreach ($request['levels'] as $level_id) {
-            $level=Level::find($level_id);
-            $subjects_arr=[];
-            foreach ((array)$level->subjects as $subject_id){
-                $subjects_arr[]=(int)$subject_id;
-            }
-            $subjects_arr[]=(int)$new_subject->id;
-            $level->update(['subjects'=>array_unique($subjects_arr)]);
+        $college=$this->model->create($request->all());
+        $level=Level::where([
+            'college_id'=>$college->id,
+            'stage_id'=>3,
+        ])->first();
+        if (!$level){
+            Level::create([
+                'university_id'=>1,
+                'college_id'=>$college->id,
+                'stage_id'=>3,
+                'class_stage_id'=>3
+            ]);
         }
-        return redirect()->route('admin.subject.index')->with('created');
+        return redirect()->route('admin.college.index')->with('created');
     }
     public function update($id,Request $request)
     {

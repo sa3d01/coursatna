@@ -57,6 +57,8 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function(){
     Route::resource('center', 'CenterController');
     // teacher
     Route::resource('teacher', 'TeacherController');
+    // college
+    Route::resource('college', 'CollegeController');
     // subject
     Route::resource('subject', 'SubjectController');
     // section

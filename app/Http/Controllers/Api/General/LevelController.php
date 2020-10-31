@@ -38,16 +38,14 @@ class LevelController extends Controller
     }
     public function class_stages()
     {
-        $classes=ClassStage::whereIn('id',[1,2,3])->get();
         if (request()->learn_type=='College'){
-//            $classes=ClassStage::all();
             return response()->json(
                 ClassStageDTO::collection(College::all()),
                 200
             );
         }
         return response()->json(
-            ClassStageDTO::collection($classes),
+            ClassStageDTO::collection(ClassStage::whereIn('id',[1,2,3])->get()),
             200
         );
     }

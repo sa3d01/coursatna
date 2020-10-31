@@ -23,6 +23,7 @@ class PhoneRegisterController extends Controller
         $data = $request->validated();
         $data['banned'] = false;
         $data['locale'] = "en";
+        $data['learn_type'] = $request['learn_type'];
         $data['notification_toggle'] = true;
         $data['last_ip'] = $request->ip();
         if ($request['stage_id'] && $request['class_stage_id']){

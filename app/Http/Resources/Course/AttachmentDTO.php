@@ -26,8 +26,10 @@ class AttachmentDTO extends JsonResource
         $arr['image']=$this->image;
         $arr['price']=(int)$this->price;
         if ($subscribed){
+            $arr['subscribed']=true;
             $arr['file']=$this->file;
         }else{
+            $arr['subscribed']=false;
             $arr['file']='';
         }
         $arr['file_type']=$this->file_type;

@@ -63,7 +63,13 @@ class SliderController extends MasterController
     public function store(Request $request)
     {
         $this->validate($request, $this->validation_func(1),$this->validation_msg());
-        $this->model->create($request->all());
+        $data=$request->all();
+        $levels=[];
+        foreach ($request['levels'] as $level_id) {
+            $levels[] = (int) $level_id;
+        }
+        $data['levels']= $levels;
+        $this->model->create($data);
         return redirect()->route('admin.slider.index')->with('created');
     }
     public function update($id,Request $request)

@@ -56,7 +56,7 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <label for=""> المراحل التابعة لها المادة</label>
-                                                    <select name="permissions[]" class="form-control select2" multiple="true">
+                                                    <select name="levels[]" class="form-control select2" multiple="true">
                                                         @foreach(\App\Models\Level::all() as $level)
                                                             <option value="{{$level->id}}" @if($loop->first) selected="true" @endif>
                                                                 {{$level->nameForSelect()}}

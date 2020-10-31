@@ -60,10 +60,12 @@ class CourseController extends Controller
         }
         $course=Course::find($id);
         $wallet = (int)$user->wallet;
-        if (Subscribe::where(['user_id'=>$user->id, 'course_id'=> $id])->first())
-            return response()->json(['message' => "لم تنتهى مدة اشتراكك بعد"], 400);
-        if ($course->price > $wallet)
+        if (Subscribe::where(['user_id'=>$user->id, 'course_id'=> $id])->first()){
+            return response()->json(['message' => "لم تنتهى مدة اشتراكك "], 400);
+        }
+        if ($course->price > $wallet){
             return response()->json(['message' => "ﻻ يوجد لديك رصيد كافى للإشتراك"], 400);
+        }
         Subscribe::create([
            'user_id'=>$user->id,
            'course_id'=> $id

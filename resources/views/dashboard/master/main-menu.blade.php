@@ -1,17 +1,17 @@
 <ul class="main-menu">
     @if(Auth::user()->getRoleArabicName()=='ADMIN')
     <li class="sub-header">
-        <span>السناتر والمدرسين</span>
+        <span> السناتر والمدرسين والكليات</span>
     </li>
     <li class="has-sub-menu">
         <a href="#">
             <div class="icon-w">
                 <div class="os-icon os-icon-lock"></div>
             </div>
-            <span>السناتر والمدرسين</span></a>
+            <span>السناتر والمدرسين والكليات</span></a>
         <div class="sub-menu-w">
             <div class="sub-menu-header">
-                السناتر والمدرسين
+                السناتر والمدرسين والكليات
             </div>
             <div class="sub-menu-icon">
                 <i class="os-icon os-icon-lock"></i>
@@ -23,6 +23,9 @@
                     </li>
                     <li>
                         <a href="{{route('admin.teacher.index')}}"> المدرسين</a>
+                    </li>
+                    <li>
+                        <a href="{{route('admin.college.index')}}"> الكليات</a>
                     </li>
                 </ul>
             </div>
@@ -146,39 +149,59 @@
         </div>
     </li>
 
-{{--    <li class="sub-header">--}}
-{{--        <span>رسائل الأعضاء</span>--}}
-{{--    </li>--}}
-{{--    <li class=" has-sub-menu">--}}
-{{--        <a href="{{route('admin.contact.index')}}">--}}
-{{--            <div class="icon-w">--}}
-{{--                <div class="os-icon os-icon-email-2-at"></div>--}}
+    @elseif(Auth::user()->getRoleArabicName()=='TEACHER')
+{{--        <li class="sub-header">--}}
+{{--            <span>الأبواب الدراسية</span>--}}
+{{--        </li>--}}
+{{--        <li class="has-sub-menu">--}}
+{{--            <a href="#">--}}
+{{--                <div class="icon-w">--}}
+{{--                    <div class="os-icon os-icon-text-input"></div>--}}
+{{--                </div>--}}
+{{--                <span>الأبواب الدراسية</span></a>--}}
+{{--            <div class="sub-menu-w">--}}
+{{--                <div class="sub-menu-header">--}}
+{{--                    الأبواب الدراسية--}}
+{{--                </div>--}}
+{{--                <div class="sub-menu-icon">--}}
+{{--                    <i class="os-icon os-icon-text-input"></i>--}}
+{{--                </div>--}}
+{{--                <div class="sub-menu-i">--}}
+{{--                    <ul class="sub-menu">--}}
+{{--                        <li class="has-sub-menu">--}}
+{{--                            <a href="{{route('admin.section.index')}}">الأبواب الدراسية</a>--}}
+{{--                            <a href="{{route('admin.ask.index')}}">بنك أسئلة</a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
 {{--            </div>--}}
-{{--            <span>رسائل الأعضاء</span>--}}
-{{--        </a>--}}
-{{--    </li>--}}
-    @elseif(Auth::user()->getRoleArabicName()!='TEACHER')
+{{--        </li>--}}
         <li class="sub-header">
-            <span>الأبواب الدراسية</span>
+            <span>الكورسات</span>
         </li>
         <li class="has-sub-menu">
             <a href="#">
                 <div class="icon-w">
-                    <div class="os-icon os-icon-text-input"></div>
+                    <div class="os-icon os-icon-tv"></div>
                 </div>
-                <span>الأبواب الدراسية</span></a>
+                <span>الكورسات</span></a>
             <div class="sub-menu-w">
                 <div class="sub-menu-header">
-                    الأبواب الدراسية
+                    الكورسات
                 </div>
                 <div class="sub-menu-icon">
-                    <i class="os-icon os-icon-text-input"></i>
+                    <i class="os-icon os-icon-tv"></i>
                 </div>
                 <div class="sub-menu-i">
                     <ul class="sub-menu">
-                        <li class="has-sub-menu">
-                            <a href="{{route('admin.section.index')}}">الأبواب الدراسية</a>
-                            <a href="{{route('admin.ask.index')}}">بنك أسئلة</a>
+                        <li>
+                            <a href="{{route('admin.course.index')}}"> الكورسات</a>
+                        </li>
+                        <li>
+                            <a href="{{route('admin.course_session.index')}}"> الحصص</a>
+                        </li>
+                        <li>
+                            <a href="{{route('admin.course_attachment.index')}}"> الملفات</a>
                         </li>
                     </ul>
                 </div>

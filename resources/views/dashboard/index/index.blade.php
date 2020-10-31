@@ -75,7 +75,9 @@
                                             @if($row->hasRole(\Spatie\Permission\Models\Role::all()))
                                                 <td>{{$row->getRoleArabicName()}}</td>
                                             @else
+                                                <td>
                                                 ﻻ يمتلك أي صﻻحيات حتى الآن
+                                                </td>
                                             @endif
                                     @elseif($type=='role' && $value=='users_count')
                                             <td>{{$row->users()->count()}}</td>

@@ -48,7 +48,23 @@ class StudentUserDTO extends JsonResource
                 ];
             }
         }else{
-            $level="";
+            $level=[
+                'id' => $this->level ? (int)$this->level->id : 0,
+                'class_stage' => [
+                    'id'=>$this->level ? (int)$this->level->class_stage_id : 0,
+                    'name'=>[
+                        'en' => $this->level ? $this->level->class_stage->name_en : "",
+                        'ar' => $this->level ? $this->level->class_stage->name_ar : "",
+                    ]
+                ],
+                'stage' => [
+                    'id'=>$this->level ? (int)$this->level->stage_id : 0,
+                    'name'=>[
+                        'en' => $this->level ? $this->level->stage->name_en : "",
+                        'ar' => $this->level ? $this->level->stage->name_ar : "",
+                    ]
+                ],
+            ];
         }
         return [
             'id' => (int)$this->id,
